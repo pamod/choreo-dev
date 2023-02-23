@@ -47,8 +47,8 @@ service /catalog on new http:Listener(9090) {
     }
 
     // resource function to delete catalog
-    resource function delete deleteCatalog(@http:Payload Catalog catalog) returns json {
-        sql:Error? result = deleteCatalog(catalog);
+    resource function delete [string title]() returns json {
+        sql:Error? result = deleteCatalog(title);
         if result is sql:Error {
             io:println("Error occured while deleting data", result);
         }
@@ -119,8 +119,8 @@ function updateCatalog(Catalog catalog) returns sql:Error? {
 }
 
 // create function to delete catalog 
-function deleteCatalog(Catalog catalog) returns sql:Error? {
-    sql:ParameterizedQuery query = `DELETE FROM petstore WHERE Title = ${catalog.Title}`;
+function deleteCatalog(string title) returns sql:Error? {
+    sql:ParameterizedQuery query = `DELETE FROM petstore WHERE Title = ${title}`;
     sql:ExecutionResult|sql:Error result = dbClient->execute(query);
     if (result is sql:ExecutionResult) {
         io:println("Query executed successfully");
