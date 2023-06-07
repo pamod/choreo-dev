@@ -9,6 +9,7 @@ const logout = signOut => {
     localStorage.removeItem('authenticated');
     localStorage.removeItem('userName');
     localStorage.removeItem('decodedId');
+    localStorage.removeItem('group');
     signOut();
 };
 
@@ -19,8 +20,9 @@ const LoginStatusBar = props => {
     const decodedToken = async () => {
         if (state.isAuthenticated === true) {
             let token = await getDecodedIDToken();
-            props.setDecodedToken(token);
-            localStorage.setItem('decodedId', token);
+            localStorage.setItem('decodedId', JSON.stringify(token));
+            localStorage.setItem('group', token?.groups?.[0]);
+            props.setDecodedGroup(token?.groups?.[0]);
         }
     };
 
@@ -52,8 +54,8 @@ const LoginStatusBar = props => {
 }
 
 const Navigation = () => {
-
-    const [decodedToken, setDecodedToken] = useState({});
+    const [decodedGroup, setDecodedGroup] = useState('');
+    let group = localStorage.getItem('group');
 
     return (
         <Navbar bg="light" expand="lg">
@@ -63,12 +65,12 @@ const Navigation = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        {decodedToken?.groups?.[0] == 'Manager' && <Nav.Link as={Link} to="/manage">Manage</Nav.Link>}
-                        {decodedToken?.groups?.[0] == 'User' && <Nav.Link as={Link} to="/points">MyPoints</Nav.Link >}
+                        { group === 'Manager' && <Nav.Link as={Link} to="/manage">Manage</Nav.Link>}
+                        { group === 'User' && <Nav.Link as={Link} to="/points">MyPoints</Nav.Link >}
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
-                    <LoginStatusBar setDecodedToken={setDecodedToken} />
+                    <LoginStatusBar setDecodedGroup={setDecodedGroup} />
                 </Navbar.Collapse>
             </Container>
         </Navbar>
