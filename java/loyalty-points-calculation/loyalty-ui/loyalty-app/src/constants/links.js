@@ -10,7 +10,7 @@
 export const AsgardeoConfig = {
     signInRedirectURL: "http://localhost:3000",
     signOutRedirectURL: "http://localhost:3000",
-    clientID:"nUoWMXXJbrB6fLYY3S3frkO3WKAa",
+    clientID:"98Q7gJxVXYLE8s9K7RcF9nXl5b0a",
     baseUrl: "https://api.asgardeo.io/t/pamod",
     scope: ["openid", "groups", "profile"]
 };
@@ -21,5 +21,5 @@ export const AsgardeoConfig = {
 // };
 
 export const Hosts = {
-    Loyalty: "https://70523a4f-2a9d-4e13-bb3a-92298a62b410-dev.e1-us-east-azure.choreoapis.dev/bmzj/loyaltyservice/loyalty-api-5c6/1.0.0"
+    Loyalty: "https://70523a4f-2a9d-4e13-bb3a-92298a62b410-dev.e1-us-east-azure.choreoapis.dev/gpnq/loyaltyapplicationservice/loyalty-api-5c6/1.0.0"
  };
