@@ -1,0 +1,91 @@
+openapi: 3.0.1
+info:
+  title: Loyalty Points API
+  description: Calculate Loyalty Points for Given User
+  license:
+    name: Apache 2.0
+    url: http://loyalty.org
+  version: v0.0.1
+externalDocs:
+  description: Loyalty Wiki Documentation
+  url: https://loyalty.wiki.github.org/docs
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /loyalty:
+    get:
+      tags:
+        - loyalty-point-controller
+      operationId: getPoints
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LoyaltyPoint'
+    post:
+      tags:
+        - loyalty-point-controller
+      operationId: addPoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoyaltyPoint'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+    delete:
+      tags:
+        - loyalty-point-controller
+      operationId: deletePoints
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /loyalty/all:
+    get:
+      tags:
+        - loyalty-point-controller
+      operationId: getAllPoints
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/LoyaltyPoint'
+components:
+  schemas:
+    LoyaltyPoint:
+      type: object
+      properties:
+        name:
+          type: string
+        totalNumberOfPoints:
+          type: integer
+          format: int32
