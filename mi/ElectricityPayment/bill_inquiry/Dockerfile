@@ -19,7 +19,7 @@
 # The image is based on a small Alpine Linux image.
 # The image uses a non-root user with a known UID/GID to run the container.
 # The image has a single entrypoint, the go-greeter executable.
-FROM golang:1.19-alpine AS builder
+FROM golang:1.24.3-alpine AS builder
 
 # Set the working directory to /app
 WORKDIR /app
@@ -28,7 +28,7 @@ WORKDIR /app
 COPY . .
 
 # Build the Go program inside the container
-RUN go build -o go-greeter .
+RUN go build -o bill-inq .
 
 # Use a small Alpine Linux image as the base image for the final container
 FROM alpine:latest
@@ -37,7 +37,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Copy the executable from the builder container
-COPY --from=builder /app/go-greeter .
+COPY --from=builder /app/bill-inq .
 
 # Create a user with a known UID/GID within range 10000-20000.
 # This is required by Choreo to run the container as a non-root user.
@@ -53,4 +53,4 @@ RUN adduser \
 USER 10014
 
 # Set the entrypoint to the executable
-ENTRYPOINT ["./go-greeter"]
+ENTRYPOINT ["./bill-inq"]
