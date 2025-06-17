@@ -24,7 +24,17 @@ func generateRandomDecimal(min, max float64) float64 {
 	return min + randomFloat*(max-min)
 }
 
-// billHandler handles HTTP requests to /bill/users/{userId}
+// @Summary Get user bill amount or message
+// @Description Get the due amount for a user if their ID starts with a digit, or a "No due to pay" message if it starts with a letter.
+// @Tags bills
+// @Accept json
+// @Produce json
+// @Param userId path string true "User ID"
+// @Success 200 {object} map[string]interface{} "Successful response with due amount or message"
+// @Failure 400 {string} string "Invalid URL format or empty/invalid user ID"
+// @Failure 405 {string} string "Method not allowed"
+// @Failure 500 {string} string "Internal server error"
+// @Router /bill/users/{userId} [get]
 func billHandler(w http.ResponseWriter, r *http.Request) {
 	// Only allow GET requests
 	if r.Method != http.MethodGet {

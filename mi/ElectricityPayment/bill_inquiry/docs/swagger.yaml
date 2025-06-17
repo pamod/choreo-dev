@@ -1,0 +1,39 @@
+info:
+  contact: {}
+paths:
+  /bill/users/{userId}:
+    get:
+      consumes:
+      - application/json
+      description: Get the due amount for a user if their ID starts with a digit,
+        or a "No due to pay" message if it starts with a letter.
+      parameters:
+      - description: User ID
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response with due amount or message
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid URL format or empty/invalid user ID
+          schema:
+            type: string
+        "405":
+          description: Method not allowed
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get user bill amount or message
+      tags:
+      - bills
+swagger: "2.0"
