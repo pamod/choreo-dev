@@ -1,0 +1,20 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="HelloWorldAPI" context="/hello">
+    <resource methods="GET" uri-template="/world">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "message": "hello"
+                    }
+                </format>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <log category="ERROR">
+                <message>Error occurred in HelloWorld API: ${props.synapse.ERROR_MESSAGE}</message>
+            </log>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>
