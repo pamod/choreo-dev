@@ -5,7 +5,7 @@
             <payloadFactory media-type="json">
                 <format>
                     {
-                        "message": "Hello, ${params.pathParams.name}"
+                        "message": "Welcome, ${params.pathParams.name}"
                     }
                 </format>
             </payloadFactory>
