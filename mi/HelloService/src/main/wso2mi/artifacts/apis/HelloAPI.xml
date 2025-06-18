@@ -1,0 +1,14 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="HelloAPI" context="/hello">
+    <resource methods="GET" uri-template="/{name}">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "message": "hello, ${params.pathParams.name}"
+                    }
+                </format>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>
