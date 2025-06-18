@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="HelloAPI" context="/hello">
+    <resource methods="GET" uri-template="/person/{name}">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "message": "Hello, ${params.pathParams.name}"
+                    }
+                </format>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <log category="ERROR">
+                <message>Error occurred: ${props.synapse.ERROR_MESSAGE}</message>
+            </log>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "error": "An error occurred while processing your request"
+                    }
+                </format>
+            </payloadFactory>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>
